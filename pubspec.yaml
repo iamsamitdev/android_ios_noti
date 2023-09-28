@@ -45,6 +45,9 @@ dependencies:
   # Flutter Local Notification
   flutter_local_notifications: ^15.1.1
 
+  # GetX
+  get: ^4.6.0
+
   # flutter_local_notifications: ^9.4.0
   # firebase_core: ^1.14.0
   # firebase_messaging: ^11.2.12
