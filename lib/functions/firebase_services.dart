@@ -57,7 +57,10 @@ class FirebaseService {
         // You can handle the message when the app is opened from a notification here.
         if (message.data['page'] == "page5") {
           // Navigation to success page with material page route
-          Get.to(SuccessPage(), arguments: [message.data]);
+          Get.to(() => SuccessPage(), arguments: {
+              "first": 'First data',
+              "second": 'Second data',
+          });
         }
       }
     });
