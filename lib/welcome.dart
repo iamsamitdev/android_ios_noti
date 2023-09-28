@@ -23,12 +23,12 @@ class _WelcomeState extends State<Welcome> {
     var headers = {
       'Content-Type': 'application/json',
       'Authorization':
-          'key=AAAA9HiERic:APA91bGk8CkQxvaKdJQZBJtocu7fb5rQVojoqq4pP5xTXlKKOev6q2XwwpZ0_0rQBiVwacO_TJ5UkXAZkpkoL4Fh0h_c6T_X3Z1OXCaE1qjoIpXruXXl4Dp_ai55B9ayNcSlMhTMw2mq'
+          'key=xxx'
     };
 
     var data = 
       {
-        "to": "dZ6r6GkPS_-mNaLqIotpya:APA91bFjFzLRnv-8aKlV7VG8V5HUhgKSI5qktvH_Mj-X7oLq647Ug-jQJtx28TXUk0SaN1B_HlrOGXVdadGPF2Gv4hBrNcROwxum3iO4F_gdVgVygsijjFu-ye9wtboOociV4144mX9H",
+        "to": "xxx",
         "notification": {
           "title": "This is title 5",
           "body": "test notification 5",
