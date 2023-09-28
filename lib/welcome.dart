@@ -28,11 +28,12 @@ class _WelcomeState extends State<Welcome> {
 
     var data = 
       {
-        "to": "xxxx",
+        "to": "dZ6r6GkPS_-mNaLqIotpya:APA91bFjFzLRnv-8aKlV7VG8V5HUhgKSI5qktvH_Mj-X7oLq647Ug-jQJtx28TXUk0SaN1B_HlrOGXVdadGPF2Gv4hBrNcROwxum3iO4F_gdVgVygsijjFu-ye9wtboOociV4144mX9H",
         "notification": {
           "title": "This is title 5",
           "body": "test notification 5",
-          "icon": "myicon"
+          "icon": "myicon",
+          "sound": "default"
         },
         "android": {"priority": "high"},
         "apns": {

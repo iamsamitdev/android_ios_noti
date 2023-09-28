@@ -8,8 +8,7 @@ import 'package:get/get.dart';
 // Firebase Messaging Handler for Background
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   if (message.notification != null) {
-    print(
-        'onBackgroundMessage: ${message.notification!.body} \n ${message.data}');
+    print('onBackgroundMessage: ${message.notification!.body} \n ${message.data}');
     // Handle the background message here if needed.
   }
 }
@@ -23,6 +22,13 @@ class FirebaseService {
   Future<void> initializeFirebaseMessaging() async {
     FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
+    // Set foreground notification presentation options to alert, sound and badge
+    await _firebaseMessaging.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
     // Subscribe to topic for broadcast notifications
     await _firebaseMessaging.subscribeToTopic('testNotification');
 
@@ -32,9 +38,16 @@ class FirebaseService {
 
     // Request notification permission
     NotificationSettings notificationSettings =
-        await _firebaseMessaging.requestPermission();
-    print(
-        'Notification authorization status: ${notificationSettings.authorizationStatus}');
+        await _firebaseMessaging.requestPermission(
+          alert: true,
+          announcement: false,
+          badge: true,
+          carPlay: false,
+          criticalAlert: false,
+          provisional: false,
+          sound: true,
+        );
+    print('Notification authorization status: ${notificationSettings.authorizationStatus}');
 
     // Initialize local notifications
     await _initializeLocalNotifications();
@@ -59,7 +72,7 @@ class FirebaseService {
             'onMessageOpenedApp: ${message.notification!.body}\n ${message.data}');
         // You can handle the message when the app is opened from a notification here.
         if (message.data['page'] == "page5") {
-          // Navigation to success page with material page route
+          // Navigation to success page
           Get.to(() => SuccessPage(), arguments: {
               "first": 'First data',
               "second": 'Second data',
@@ -71,12 +84,23 @@ class FirebaseService {
 
   // Initialize Local Notifications
   Future<void> _initializeLocalNotifications() async {
+
+    // for android
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('ic_launcher');
+
+    // for iOS
+    const DarwinInitializationSettings initializationSettingsIOS =
+        DarwinInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+    );
+
     final InitializationSettings initializationSettings =
         InitializationSettings(
       android: initializationSettingsAndroid,
-      iOS: DarwinInitializationSettings(),
+      iOS: initializationSettingsIOS,
     );
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
@@ -88,11 +112,7 @@ class FirebaseService {
           print(
               'Notification forground tapped ${notificationResponse.payload}');
           if (notificationResponse.payload == "page5") {
-            // Navigation to success page with material page route
-            // Convert notificationResponse.payload to Map<String, dynamic>
-            // Map<String, dynamic> data = notificationResponse.payload as Map<String, dynamic>;
-            // print("mylink:+ ${data['link']}");
-
+            // Navigation to success page 
             Get.to(() => SuccessPage(), arguments: {
               "first": 'First data',
               "second": 'Second data',
@@ -106,24 +126,29 @@ class FirebaseService {
 
   // Show a local notification
   Future<void> _showLocalNotification(
-       String title, String body, String data) async {
-    const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(
-      'your_channel_id',
-      'Your Channel Name',
-      importance: Importance.max,
-      priority: Priority.high,
-      showWhen: false,
-    );
-
-    const NotificationDetails platformChannelSpecifics =
-        NotificationDetails(android: androidPlatformChannelSpecifics);
+    String title, String body, String data) async {
 
     await flutterLocalNotificationsPlugin.show(
         0, // Notification ID
         title,
         body,
-        platformChannelSpecifics,
-        payload: data);
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            'channel_id_977',
+            'IT Genius Notification',
+            importance: Importance.max,
+            priority: Priority.high,
+            showWhen: false,
+            playSound: true,
+          ),
+          iOS: const DarwinNotificationDetails(
+            presentAlert: true,
+            presentBadge: true,
+            presentSound: true,
+          ),
+        ),
+        payload: data
+    );
   }
+
 }
