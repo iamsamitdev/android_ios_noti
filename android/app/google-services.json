@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1049993954855",
+    "project_id": "android-ios-noti",
+    "storage_bucket": "android-ios-noti.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049993954855:android:74b8964ccc19a185de3002",
+        "android_client_info": {
+          "package_name": "com.itgenius.android_ios_noti"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-cRcZ3FXI7cofBMcYos57sRhMk4Qeoa4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
