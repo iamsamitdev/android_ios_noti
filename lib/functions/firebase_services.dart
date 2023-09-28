@@ -23,6 +23,9 @@ class FirebaseService {
   Future<void> initializeFirebaseMessaging() async {
     FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
+    // Subscribe to topic for broadcast notifications
+    await _firebaseMessaging.subscribeToTopic('testNotification');
+
     // Get the device token
     String? token = await _firebaseMessaging.getToken();
     print('Firebase token: $token');
@@ -86,6 +89,10 @@ class FirebaseService {
               'Notification forground tapped ${notificationResponse.payload}');
           if (notificationResponse.payload == "page5") {
             // Navigation to success page with material page route
+            // Convert notificationResponse.payload to Map<String, dynamic>
+            // Map<String, dynamic> data = notificationResponse.payload as Map<String, dynamic>;
+            // print("mylink:+ ${data['link']}");
+
             Get.to(() => SuccessPage(), arguments: {
               "first": 'First data',
               "second": 'Second data',

@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class Welcome extends StatefulWidget {
   const Welcome({super.key});
@@ -10,6 +13,57 @@ class Welcome extends StatefulWidget {
 }
 
 class _WelcomeState extends State<Welcome> {
+  // Test Send Push Notification
+  void testSendPushNotification() async {
+
+    // url
+    String url = 'https://fcm.googleapis.com/fcm/send';
+
+    // Config http headers
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization':
+          'key=AAAA9HiERic:APA91bGk8CkQxvaKdJQZBJtocu7fb5rQVojoqq4pP5xTXlKKOev6q2XwwpZ0_0rQBiVwacO_TJ5UkXAZkpkoL4Fh0h_c6T_X3Z1OXCaE1qjoIpXruXXl4Dp_ai55B9ayNcSlMhTMw2mq'
+    };
+
+    var data = 
+      {
+        "to": "xxxx",
+        "notification": {
+          "title": "This is title 5",
+          "body": "test notification 5",
+          "icon": "myicon"
+        },
+        "android": {"priority": "high"},
+        "apns": {
+          "headers": {"apns-priority": "10"},
+          "payload": {
+            "aps": {"sound": "default"}
+          }
+        },
+        "data": {
+          "click_action": "FLUTTER_NOTIFICATION_CLICK",
+          "notification_foreground": "true",
+          "notification_android_sound": "default",
+          "page": "page5",
+          "link": "room1",
+          "id": "1"
+        }
+      };
+
+      try {
+        var response = await http.post(
+          Uri.parse(url), 
+          headers: headers, 
+          body: jsonEncode(data)
+        );
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      } catch (e) {
+        print(e);
+      }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +71,17 @@ class _WelcomeState extends State<Welcome> {
         title: const Text('Welcome'),
       ),
       body: Center(
-        child: Text('Welcome Screen'),
+        child: Column(
+          children: [
+            Text('Welcome Screen'),
+            ElevatedButton(
+              onPressed: () {
+                testSendPushNotification();
+              },
+              child: const Text('Test Send Push Notification'),
+            ),
+          ],
+        ),
       ),
     );
   }
