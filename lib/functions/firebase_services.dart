@@ -1,9 +1,7 @@
 // ignore_for_file: avoid_print, prefer_const_constructors, no_leading_underscores_for_local_identifiers, unused_field, override_on_non_overriding_member
 
 import 'package:android_ios_noti/success.dart';
-// import 'package:android_ios_noti/welcome.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-// import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 
@@ -59,7 +57,7 @@ class FirebaseService {
         // You can handle the message when the app is opened from a notification here.
         if (message.data['page'] == "page5") {
           // Navigation to success page with material page route
-          Get.to(SuccessPage());
+          Get.to(SuccessPage(), arguments: [message.data]);
         }
       }
     });
@@ -85,7 +83,10 @@ class FirebaseService {
               'Notification forground tapped ${notificationResponse.payload}');
           if (notificationResponse.payload == "page5") {
             // Navigation to success page with material page route
-            Get.to(SuccessPage());
+            Get.to(() => SuccessPage(), arguments: {
+              "first": 'First data',
+              "second": 'Second data',
+            });
           }
         }
       },
