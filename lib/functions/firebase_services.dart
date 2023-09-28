@@ -21,7 +21,7 @@ class FirebaseService {
   });
 
   // Initialize Firebase Messaging
- Future<Map<String, Object?>> initializeFirebaseMessaging() async {
+ Future<Map<String, Object?>> initializeFirebaseMessaging({required Null Function(RemoteMessage message) onMessageCallback, required Null Function(RemoteMessage message) onMessageOpenedAppCallback}) async {
     FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
     String? token = await _firebaseMessaging.getToken();
     NotificationSettings notificationSettings =
